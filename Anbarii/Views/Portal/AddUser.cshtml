@@ -1,0 +1,125 @@
+﻿@model  User
+@using Anbarii.Classes.Values
+@using Anbarii.Controllers
+@using Anbarii.Classes
+@using Anbarii.Models
+@{
+    TempData[PortalController.SUsers] = "active";
+    AnbariiEntities db = new AnbariiEntities();
+    List<Role> RoleList = db.Roles.ToList();
+    ViewBag.Title = "افزودن کاربر";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+
+
+}
+
+
+<div class="row">
+
+    <div class="col-lg-7 col-md-12">
+        <div class="card card-profile">
+            <div class="card-avatar">
+                <a href="#pablo">
+                    <img class="img" src="~/assets/img/faces/placeholder-profile.jpg" />
+                </a>
+            </div>
+            @using (Html.BeginForm(PortalController.SAddUser, PortalController.SController))
+            {
+                @Html.AntiForgeryToken()
+                <div class="card-body ">
+                    <div class="form-group has-feedback bmd-form-group">
+                        @Html.DropDownListFor(Model => Model.RoleID, new SelectList(RoleList.Select(i => new { i.ID, i.Name }), "ID", "Name"), new { @class = "form-control ui search dropdown", @required = "required", @data_error = "انتخاب نوع کاربر اجباریست." })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Name_Company, "نام انبار", htmlAttributes: new { id = "Name_CompanyID", @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Name_Company, "", new { @class = "form-control", @required = "required", @data_error = "نام انبار/شرکت اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Name, "نام", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Name, "", new { @class = "form-control", @required = "required", @data_error = "نام اجباریست.", maxlength = "70", data_max_error = "حداکثر کارکتر 70" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Mobile, "تلفن همراه", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Mobile, "", new { @class = "form-control", pattern = "^[+,-;0-9]*$", @data_error = "تلفن همراه اجباریست.", maxlength = "60", data_max_error = "حداکثر کارکتر 60", data_minlength = "11", data_minlength_error = "حداقل کارکتر 11" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Phone, "تلفن", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Phone, "", new { @class = "form-control", pattern = "^[+,-;0-9]*$", @data_error = "تلفن اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50", data_minlength = "8", data_minlength_error = "حداقل کارکتر 8" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Code, "کدملی", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Code, "", new { @class = "form-control", pattern = "^[-0-9]*$", @data_error = "کدمل اجباریست.", maxlength = "10", data_max_error = "حداکثر کارکتر 10", data_minlength = "10", data_minlength_error = "حداقل کارکتر 10" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback bmd-form-group">
+                        @Html.LabelFor(Model => Model.Economic_Code, "کد انبار", htmlAttributes: new { id = "Economic_CodeID", @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Economic_Code, "", new { @class = "form-control", pattern = "^[0-9]*$", @data_error = "شماره انبار/کد اقتصادی اجباریست.", maxlength = "12", data_max_error = "حداکثر کارکتر 12" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Adress, "آدرس", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextAreaFor(Model => Model.Adress, 3, 1, new { @class = "form-control", @data_error = "آدرس اجباریست.", maxlength = "200", data_max_error = "حداکثر کارکتر 200" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Code_Posti, "کدپستی", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Code_Posti, "", new { @class = "form-control", pattern = "^[0-9]*$", @data_error = "کد پستی اجباریست.", maxlength = "10", data_max_error = "حداکثر کارکتر 10" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Email, "ایمیل", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.TextBoxFor(Model => Model.Email, "", new { @class = "form-control", type = "email", data_emailcheck = "", @required = "required", @data_required_error = "ایمیل اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group has-feedback  bmd-form-group">
+                        @Html.LabelFor(Model => Model.Password, "رمزعبور", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.PasswordFor(Model => Model.Password, new { @class = "form-control", data_minlength = "6", @required = "required", @data_error = "رمز عبور اجباریست.", data_minlength_error = "حداقل کارکتر 6" })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-feedback bmd-form-group">
+                        @Html.Label("تکرار رمزعبور", htmlAttributes: new { @class = "bmd-label-floating" })
+                        @Html.Password("Repassword", "", new { @class = "form-control", @required = "required", @data_error = "تکرار رمزعبور اجباریست.", data_match = "#Password", data_match_error = "تکرار رمز اشتباه است." })
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="card-footer" style="text-align:center">
+                    <input class="btn btn-success btn-lg hidden" type="submit" value="ثبت" />
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+@section footer{
+
+    <script>
+
+        $(document).ready(function () {
+            $('.ui.dropdown')
+                .dropdown();
+            $('#Role').change(function () {
+                if ($(this).val() == "2") {
+                    $('#Name_CompanyID').text('نام انبار');
+                    $('#Economic_CodeID').text('کد انبار');
+
+                } else {
+                    $('#Name_CompanyID').text('نام شرکت');
+                    $('#Economic_CodeID').text('کد اقتصادی');
+
+                }
+
+            })
+        });
+    </script>
+}
+
+
+

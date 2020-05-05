@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>@ViewBag.Title - انباری</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link href="~/css/bootstrap-rtl.min_.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/css/crbt.min.css">
+    <link rel="stylesheet" href="~/css/_all-skins.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap3-wysihtml5.min.css">
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    @RenderSection("header", required: false)
+</head>
+<body class="hold-transition login-page">
+
+    <div style="width:90%;margin-left:auto;margin-right:auto">
+        <div class="login-logo">
+            <a href="@Url.Action("index","home")">
+                پورتال <b>انباری</b>
+            </a>
+        </div>
+        <div class="login-box-body">
+            @RenderBody()
+        </div>
+
+    </div>
+    <footer style="background: #fff; padding: 15px;color: #444;border-top: 1px solid #d2d6de;position: fixed;bottom: 0;width: 100%;">
+
+        <strong><a data-toggle="tooltip" title="تماس با ما" href=#>تماس با ما</a></strong>
+    </footer>
+    <div class="control-sidebar-bg"></div>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/bootstrap.min.js"></script>
+
+    <script src="~/js/icheck.min.js"></script>
+
+    @RenderSection("footer", required: false)
+</body>
+</html>

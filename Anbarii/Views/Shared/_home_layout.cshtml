@@ -1,0 +1,316 @@
+﻿@using Anbarii.Models
+@{
+    AnbariiEntities db = new AnbariiEntities();
+    SiteSetting Support = db.SiteSettings.Where(i => i.Role.Equals("Support", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+    SiteSetting ContactUs = db.SiteSettings.Where(i => i.Role.Equals("ContactUs", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="perfect-scrollbar-on">
+<head>
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>@ViewBag.Title - انباری</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+    <!-- Markazi Text font include just for persian demo purpose, don't include it in your project -->
+    <link href="https://fonts.googleapis.com/css?family=Cairo&amp;subset=arabic" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+    <link href="../assets/css/material-dashboard-rtl.css?v=1.1" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="../assets/demo/demo.css" rel="stylesheet" />
+    <!-- Style Just for persian demo purpose, don't include it in your project -->
+    <link href="~/assets/css/Login.css" rel="stylesheet" />
+    <style>
+        .login-logo {
+            margin-top: 3%;
+            margin-bottom: 5%;
+        }
+
+        footer a {
+            font-size: large;
+        }
+    </style>
+    @RenderSection("header", required: false)
+</head>
+<body class="offline-doc" style="    background-color: #eee;">
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid text-center">
+            <div class="navbar-wrapper ml-auto">
+                <h4>
+                    <a class="navbar-brand" href="@Url.Action("index","home")">
+                        به پورتال <b>انباری</b> خوش آمدید.
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </nav>
+    <div class="page-header clear-filter">
+        <div class="page-header-image" style="background-image: url('../assets/img/cover.jpg');"></div>
+        <div class="content-center">
+            <div class="col-md-5 ml-auto mr-auto">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Support" tabindex="-1" role="dialog" aria-labelledby="SupportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">پشتیبانی</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">تلفن</h6>
+                            @foreach (var item in Support.Phone.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+                            }
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">ایمیل</h6>
+                            @foreach (var item in Support.Email.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="mailto:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">تلفن همراه</h6>
+                            @foreach (var item in Support.Mobile.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+
+                            }
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">فکس</h6>
+                            @foreach (var item in Support.Fax.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">کدپستی</h6>
+                            <h4 class="card-title">
+                                @Html.DisplayFor(i => Support.CodePosti)
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <h6 class="card-category text-gray">آدرس</h6>
+                            <h4 class="card-title">
+
+                                @Html.DisplayFor(i => Support.Adress)
+
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ContactUs" tabindex="-1" role="dialog" aria-labelledby="ContactUsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تماس با ما</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">تلفن</h6>
+                            @foreach (var item in ContactUs.Phone.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+                            }
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">ایمیل</h6>
+                            @foreach (var item in ContactUs.Email.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="mailto:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">تلفن همراه</h6>
+                            @foreach (var item in ContactUs.Mobile.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+
+                            }
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">فکس</h6>
+                            @foreach (var item in ContactUs.Fax.Split(','))
+                            {
+                                <h4 class="card-title">
+                                    <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                </h4>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <h6 class="card-category text-gray">کدپستی</h6>
+                            <h4 class="card-title">
+                                @Html.DisplayFor(i => ContactUs.CodePosti)
+                            </h4>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <h6 class="card-category text-gray">آدرس</h6>
+                            <h4 class="card-title">
+
+                                @Html.DisplayFor(i => ContactUs.Adress)
+
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Roles" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">شرایط و قوانین</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AboutUs" tabindex="-1" role="dialog" aria-labelledby="AboutUsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer" style="border-top: 1px solid #e7e7e7;clear:both">
+        <div class="container-fluid">
+            <nav class="float-left">
+                <ul>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#Support">پشتیبانی</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#AboutUs">درباره ما</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#ContactUs">تماس با ما</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#Roles">قوانین</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="copyright float-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>تمامی حقوق متعلق به
+                <a href="https://www.anbarii.ir" target="_blank">وبسایت انباری</a> است.
+            </div>
+            <div class="copyright float-right">
+                <a target="_blank" href="https://trustseal.enamad.ir/?id=140491&amp;Code=cydzjWE6lgHsQLkJiaZI"><img src="https://Trustseal.eNamad.ir/logo.aspx?id=140491&amp;Code=cydzjWE6lgHsQLkJiaZI" alt="" style="cursor:pointer;width:20%" id="cydzjWE6lgHsQLkJiaZI"></a>
+                <img id='jxlzfukzapfuoeukapfunbqe' style='cursor:pointer;width:20%' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=165852&p=rfthgvkadshwmcsidshwuiwk", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=165852&p=nbpdwlbqujynaqgwujynodrf' />
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="../assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
+    <!-- Chartist JS -->
+    <script src="../assets/js/plugins/chartist.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/material-dashboard.min.js?v=2.1.0" type="text/javascript"></script>
+    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-performance.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCU8p8T8tia2-zlynWRuYa2nUDo_gw36JE",
+            authDomain: "anbarii.firebaseapp.com",
+            databaseURL: "https://anbarii.firebaseio.com",
+            projectId: "anbarii",
+            storageBucket: "anbarii.appspot.com",
+            messagingSenderId: "981351986117",
+            appId: "1:981351986117:web:40b3a76edda384412491ac",
+            measurementId: "G-B3XQLCKLYK"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    <script>
+        $(document).ready(function () {
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+
+    @RenderSection("footer", required: false)
+</body>
+</html>

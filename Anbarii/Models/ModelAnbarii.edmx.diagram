@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7ed5e0f56d70414294851e6aad53f381" Name="Diagram1">
+        <EntityTypeShape EntityType="AnbariiModel.Load" Width="1.5" PointX="8.25" PointY="4.25" />
+        <EntityTypeShape EntityType="AnbariiModel.Plan" Width="1.5" PointX="2.75" PointY="12.375" />
+        <EntityTypeShape EntityType="AnbariiModel.ReceiptDetail" Width="1.5" PointX="13.5" PointY="5.5" />
+        <EntityTypeShape EntityType="AnbariiModel.Receipt" Width="1.5" PointX="11.25" PointY="2" />
+        <EntityTypeShape EntityType="AnbariiModel.Role" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="AnbariiModel.RowDetail" Width="1.5" PointX="10.5" PointY="5.375" />
+        <EntityTypeShape EntityType="AnbariiModel.sysdiagram" Width="1.5" PointX="4.75" PointY="11" />
+        <EntityTypeShape EntityType="AnbariiModel.Type" Width="1.5" PointX="6" PointY="2" />
+        <EntityTypeShape EntityType="AnbariiModel.User" Width="1.5" PointX="3" PointY="4.5" />
+        <AssociationConnector Association="AnbariiModel.FK_Loads_Owner" />
+        <AssociationConnector Association="AnbariiModel.FK_Loads_Types" />
+        <AssociationConnector Association="AnbariiModel.FK_Loads_WhereHouse" />
+        <AssociationConnector Association="AnbariiModel.FK_ReceiptDetails_Loads" />
+        <AssociationConnector Association="AnbariiModel.FK_RowDetails_D" />
+        <AssociationConnector Association="AnbariiModel.FK_RowDetails_S" />
+        <AssociationConnector Association="AnbariiModel.FK_ReceiptDetails_Receipts" />
+        <AssociationConnector Association="AnbariiModel.FK_ReceiptDetails_Types" />
+        <AssociationConnector Association="AnbariiModel.FK_Users_Roles" />
+        <AssociationConnector Association="AnbariiModel.FK_RowDetails_Types" />
+        <AssociationConnector Association="AnbariiModel.Contacts" />
+        <EntityTypeShape EntityType="AnbariiModel.Row" Width="1.5" PointX="5.25" PointY="5.875" />
+        <AssociationConnector Association="AnbariiModel.FK_RowDetails_Rows" />
+        <AssociationConnector Association="AnbariiModel.FK_Rows_Users" />
+        <EntityTypeShape EntityType="AnbariiModel.Driver" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="AnbariiModel.FK_Receipts_Drivers" />
+        <AssociationConnector Association="AnbariiModel.FK_Rows_Drivers" />
+        <AssociationConnector Association="AnbariiModel.FK_Receipts_Users" />
+        <AssociationConnector Association="AnbariiModel.FK_RowDetails_Users" />
+        <AssociationConnector Association="AnbariiModel.FK_ReceiptDetails_Users" />
+        <EntityTypeShape EntityType="AnbariiModel.SiteSetting" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AnbariiModel.NotificationCategory" Width="1.5" PointX="10.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AnbariiModel.Notification" Width="1.5" PointX="15.625" PointY="9.625" />
+        <EntityTypeShape EntityType="AnbariiModel.Order" Width="1.5" PointX="7.25" PointY="11.75" />
+        <EntityTypeShape EntityType="AnbariiModel.Payment" Width="1.5" PointX="13.5" PointY="15" />
+        <AssociationConnector Association="AnbariiModel.FK_Notifications_NotificationCategories" />
+        <AssociationConnector Association="AnbariiModel.FK_Notifications_Users" />
+        <AssociationConnector Association="AnbariiModel.FK_Orders_Plans" />
+        <AssociationConnector Association="AnbariiModel.FK_Orders_Users" />
+        <AssociationConnector Association="AnbariiModel.FK_Payments_Orders" />
+        <EntityTypeShape EntityType="AnbariiModel.Card" Width="1.5" PointX="13.375" PointY="0.875" />
+        <AssociationConnector Association="AnbariiModel.FK_Payments_Cards" />
+        <EntityTypeShape EntityType="AnbariiModel.Ticket" Width="1.5" PointX="12.625" PointY="10.125" />
+        <AssociationConnector Association="AnbariiModel.FK_Tickets_NotificationCategories" />
+        <AssociationConnector Association="AnbariiModel.FK_Tickets_Tickets" />
+        <AssociationConnector Association="AnbariiModel.FK_Tickets_UsersReceiver" />
+        <AssociationConnector Association="AnbariiModel.FK_Tickets_UsersSender" />
+        <EntityTypeShape EntityType="AnbariiModel.Token" Width="1.5" PointX="5.25" PointY="15.25" />
+        <AssociationConnector Association="AnbariiModel.FK_Tokens_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

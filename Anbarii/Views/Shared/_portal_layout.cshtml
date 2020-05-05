@@ -1,0 +1,667 @@
+﻿@using Anbarii.Classes
+@using Anbarii.Classes.Values
+@using Anbarii.Controllers
+@using Anbarii.Models
+@{
+    AnbariiEntities db = new AnbariiEntities();
+    SiteSetting Support = db.SiteSettings.Where(i => i.Role.Equals("Support", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+    SiteSetting ContactUs = db.SiteSettings.Where(i => i.Role.Equals("ContactUs", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+    List<Notification> notifications = db.Notifications.Where(i => i.UserId.Equals(Members.User.ID) && i.Seen.Equals(false)).ToList();
+    var Years = db.Rows.GroupBy(i => i.Year).OrderBy(i => i.Key).Select(i => i.Key).ToList();
+    if (!Years.Contains(DateTime.Now.MiladiTopersianYear()))
+    {
+        Years.Add(DateTime.Now.MiladiTopersianYear());
+        Years = Years.OrderBy(i => i).ToList();
+    }
+
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>@ViewBag.Title - انباری</title>
+    <link href="~/css/bootstrap-rtl.min_.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/semantic/semantic.min.css">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+    <!-- Markazi Text font include just for persian demo purpose, don't include it in your project -->
+    <link href="https://fonts.googleapis.com/css?family=Cairo&amp;subset=arabic" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link href="~/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+    <link href="~/assets/css/material-dashboard-rtl.css?v=1.1" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/assets/demo/demo.css" rel="stylesheet" />
+    <style>
+        .ui.multiple.dropdown > .label {
+            color: black !important;
+            font-size: 80% !important;
+        }
+    </style>
+    @RenderSection("header")
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper ">
+        <div class="sidebar" data-color="rose" data-background-color="white" data-image="/assets/img/sidebar-3.jpg">
+            <!--
+                Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+                Tip 2: you can also add an image using data-image tag
+            -->
+            <div class="logo">
+                <a href="@Url.Action(PortalController.SIndex,PortalController.SController)" class="simple-text logo-normal">
+                    <span class="logo-lg">پرتال<b> انباری </b></span>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item @TempData[PortalController.SIndex]">
+                        <a class="nav-link" href="@Url.Action(PortalController.SIndex,PortalController.SController)">
+                            <i class="material-icons">dashboard</i>
+                            <p>داشبورد</p>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown @TempData[PortalController.SProducts]">
+                        <a class="nav-link" data-toggle="dropdown" href="#0" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">swap_horizontal_circle</i>
+                            <p>بار</p>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="@Url.Action(PortalController.SProducts,PortalController.SController)">بارها</a>
+                            @if (Members.Login(new int[] { RolesInt.Anbar }))
+                            {
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SAddProduct, PortalController.SController)">ثبت بار</a>
+                            }
+                        </div>
+                    </li>
+                    <li class="nav-item  @TempData[PortalController.SPeople]">
+                        <a class="nav-link" href="@Url.Action(PortalController.SPeople,PortalController.SController)">
+                            <i class="material-icons">contacts</i>
+                            <p>مخاطبین</p>
+                        </a>
+                    </li>
+                    @if (Members.Login(new int[] { RolesInt.Anbar }))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">local_atm</i>
+                                <p>مالی</p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">حسابداری</a>
+                            </div>
+                        </li>
+                    }
+                    @if (Members.Login(new int[] { RolesInt.Anbar, RolesInt.Tajer }))
+                    {
+                        @*<li class="nav-item  @TempData[PortalController.STickets]">
+                                <a class="nav-link" href="@Url.Action(PortalController.STickets, PortalController.SController)">
+                                    <i class="material-icons">message</i>
+                                    <p>تیکت ها</p>
+                                </a>
+                            </li>*@
+                    }
+                    @if (Members.Login(new int[] { RolesInt.Admin }))
+                    {
+                        <li class="nav-item dropdown @TempData[PortalController.SUsers]">
+                            <a class="nav-link" data-toggle="dropdown" href="#0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">supervised_user_circle</i>
+                                <p>کاربران</p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SUsers, PortalController.SController)">لیست کاربران</a>
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SAddUser, PortalController.SController)">افزودن کاربر</a>
+                            </div>
+                        </li>
+                    }
+                    @if (Members.Login(new int[] { RolesInt.Admin, RolesInt.Anbar }))
+                    {
+                        <li class="nav-item dropdown @TempData[PortalController.STickets]">
+                            <a class="nav-link" data-toggle="dropdown" href="#0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">message</i>
+                                <p>مرکز پیام</p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SSendNotification, PortalController.SController)">ارسال پیام تکی</a>
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SSendNotification, PortalController.SController, new { PodCast = true })">ارسال پیام کلی</a>
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SMassages, PortalController.SController)">کل پیام ها</a>
+                                @if (Members.Login(new int[] { RolesInt.Admin }))
+                                {
+                                    @*<a class="dropdown-item" href="@Url.Action(PortalController.STickets, PortalController.SController)">تیکت ها</a>*@
+                                }
+                            </div>
+                        </li>
+                    }
+                    @if (Members.Login(new int[] { RolesInt.Admin }))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">settings_applications</i>
+                                <p>تنظیمات پرتال</p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="@Url.Action(PortalController.STypes,PortalController.SController)">نوع بار</a>
+                                <a class="dropdown-item" href="@Url.Action(PortalController.SMessageCategories,PortalController.SController)">دسته پیام ها</a>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " data-color="rose">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="">@ViewBag.Title</a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" data-color="rose">
+                        <form class="navbar-form" style="display:none">
+                            <div class="input-group no-border">
+                                <input type="text" value="" class="form-control" placeholder="جستجو...">
+                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                        </form>
+                        <ul class="navbar-nav">
+                            @*<li class="nav-item">
+                                    <a class="nav-link" href="#pablo">
+                                        <i class="material-icons">dashboard</i>
+                                        <p class="d-lg-none d-md-block">
+                                            آمارها
+                                        </p>
+                                    </a>
+                                </li>*@
+                            <li class="nav-item">
+                                @Html.DropDownList("Year", new SelectList(Years, Members.Year), new { @class = "form-control" })
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">notifications</i>
+                                    @if (notifications.Count > 0)
+                                    {
+                                        <span class="notification">@notifications.Count</span>
+                                    }
+                                    <p class="d-lg-none d-md-block">
+                                        اعلان‌ها
+                                    </p>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    @foreach (var item in notifications)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action(PortalController.SMassage,PortalController.SController,new { item.ID})">@item.Subject</a>
+                                    }
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action(PortalController.SMassages,PortalController.SController,new { Members.User.ID })">کل پیام ها</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" title="@Anbarii.Classes.Members.User.Name_Company" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">person</i>
+                                    <p class="d-lg-none d-md-block">
+                                        @Anbarii.Classes.Members.User.Name_Company
+                                    </p>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                                    <a class="dropdown-item" href="@Url.Action(PortalController.SProfile,PortalController.SController)">حساب کاربری</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action(PortalController.SLogOut,PortalController.SController)">خروج</a>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+
+            </div>
+            <div class="modal fade" id="Support" tabindex="-1" role="dialog" aria-labelledby="SupportModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">پشتیبانی</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">تلفن</h6>
+                                    @foreach (var item in Support.Phone.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+                                    }
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">ایمیل</h6>
+                                    @foreach (var item in Support.Email.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="mailto:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">تلفن همراه</h6>
+                                    @foreach (var item in Support.Mobile.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+
+                                    }
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">فکس</h6>
+                                    @foreach (var item in Support.Fax.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">کدپستی</h6>
+                                    <h4 class="card-title">
+                                        @Html.DisplayFor(i => Support.CodePosti)
+                                    </h4>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <h6 class="card-category text-gray">آدرس</h6>
+                                    <h4 class="card-title">
+
+                                        @Html.DisplayFor(i => Support.Adress)
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ContactUs" tabindex="-1" role="dialog" aria-labelledby="ContactUsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">تماس با ما</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">تلفن</h6>
+                                    @foreach (var item in ContactUs.Phone.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+                                    }
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">ایمیل</h6>
+                                    @foreach (var item in ContactUs.Email.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="mailto:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">تلفن همراه</h6>
+                                    @foreach (var item in ContactUs.Mobile.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+
+                                    }
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">فکس</h6>
+                                    @foreach (var item in ContactUs.Fax.Split(','))
+                                    {
+                                        <h4 class="card-title">
+                                            <a href="tel:@item">@Html.DisplayFor(i => item)</a>
+                                        </h4>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <h6 class="card-category text-gray">کدپستی</h6>
+                                    <h4 class="card-title">
+                                        @Html.DisplayFor(i => ContactUs.CodePosti)
+                                    </h4>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <h6 class="card-category text-gray">آدرس</h6>
+                                    <h4 class="card-title">
+
+                                        @Html.DisplayFor(i => ContactUs.Adress)
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="Roles" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">شرایط و قوانین</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="AboutUs" tabindex="-1" role="dialog" aria-labelledby="AboutUsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="خروج">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="float-left">
+                        <ul>
+
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#Support">پشتیبانی</a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#AboutUs">درباره ما</a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#ContactUs">تماس با ما</a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#Roles">قوانین</a>
+                            </li>
+
+                        </ul>
+                    </nav>
+
+                    <div class="copyright float-right">
+                        &copy;
+                        2019تمامی حقوق متعلق به
+                        <a href="https://www.anbarii.ir" target="_blank">وبسایت انباری</a> است.
+                    </div>
+                    <div class="float-right">
+                        <a target="_blank" href="https://trustseal.enamad.ir/?id=140491&amp;Code=cydzjWE6lgHsQLkJiaZI"><img src="https://Trustseal.eNamad.ir/logo.aspx?id=140491&amp;Code=cydzjWE6lgHsQLkJiaZI" alt="" style="cursor:pointer;width:20%" id="cydzjWE6lgHsQLkJiaZI"></a>
+
+                        <img id='jxlzfukzapfuoeukapfunbqe' style='cursor:pointer;width:20%' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=165852&p=rfthgvkadshwmcsidshwuiwk", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=165852&p=nbpdwlbqujynaqgwujynodrf' />
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+    <p class="tokenform" style="display:none">
+        @Html.AntiForgeryToken()
+    </p>
+    <!--   Core JS Files   -->
+    <script src="~/assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/core/bootstrap-material-design.min.js"></script>
+    <script src="~/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!-- Plugin for the momentJs  -->
+    <script src="~/assets/js/plugins/moment.min.js"></script>
+    <!--  Plugin for Sweet Alert -->
+    <script src="~/assets/js/plugins/sweetalert2.js"></script>
+    <!-- Forms Validations Plugin -->
+    <script src="~/assets/js/plugins/jquery.validate.min.js"></script>
+    <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+    <script src="~/assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <script src="~/assets/js/plugins/bootstrap-selectpicker.js"></script>
+    <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+    <script src="~/assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <script src="~/assets/js/plugins/bootstrap-tagsinput.js"></script>
+    <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+    <script src="~/assets/js/plugins/jasny-bootstrap.min.js"></script>
+    <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+    <script src="~/assets/js/plugins/fullcalendar.min.js"></script>
+    <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+    <script src="~/assets/js/plugins/jquery-jvectormap.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="~/assets/js/plugins/nouislider.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <!-- Library for adding dinamically elements -->
+    <script src="~/assets/js/plugins/arrive.min.js"></script>
+    <!-- Chartist JS -->
+    <script src="~/assets/js/plugins/chartist.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+    <script src="~/Content/semantic/semantic.min.js"></script>
+    <script src="~/js/validator.min.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-messaging.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyCU8p8T8tia2-zlynWRuYa2nUDo_gw36JE",
+                authDomain: "anbarii.firebaseapp.com",
+                databaseURL: "https://anbarii.firebaseio.com",
+                projectId: "anbarii",
+                storageBucket: "anbarii.appspot.com",
+                messagingSenderId: "981351986117",
+                appId: "1:981351986117:web:40b3a76edda384412491ac",
+                measurementId: "G-B3XQLCKLYK"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission();
+            } else {
+            const messaging = firebase.messaging();
+            messaging.usePublicVapidKey("BEoi21NUmTyjcQvRAgQXwfFlg5G-MW_bMcoBsekeaBUHFfdma99VUlTQ4Jqu5uk-U0rvrinG2k6C17jA5Azhess");
+            // Get Instance ID token. Initially this makes a network call, once retrieved
+            // subsequent calls to getToken will return from cache.
+            messaging.getToken().then((currentToken) => {
+                if (currentToken) {
+                    console.log(currentToken);
+                    sendTokenToServer(currentToken);
+                    return currentToken;
+                } else {
+                    // Show permission request.
+                    console.log('No Instance ID token available. Request permission to generate one.');
+                    // Show permission UI.
+                    setTokenSentToServer(false);
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                setTokenSentToServer(false);
+            });
+            messaging.onTokenRefresh(() => {
+                messaging.getToken().then((refreshedToken) => {
+                    console.log('Token refreshed.');
+                    // Send Instance ID token to app server.
+                    sendTokenToServer(refreshedToken);
+                }).catch((err) => {
+                    console.log('Unable to retrieve refreshed token ', err);
+                });
+            });
+                }
+            function sendTokenToServer(currentToken) {
+                     SaveToken(currentToken)
+            }
+            var form1 = $('.tokenform');
+            var tokenpost1 = $('input[name="__RequestVerificationToken"]', form1).val();
+            function SaveToken(token) {
+                $.ajax({
+                    url: '@Url.Action(PortalController.SSaveToken, PortalController.SController)',
+                    type: 'POST',
+                    data: {
+                                __RequestVerificationToken: tokenpost1,
+                                Token: token
+                    },
+                    success: function (response) {
+
+                            },
+                });
+            }
+            $('#Year').change(function () {
+                SaveYear($(this).val())
+             });
+            function SaveYear(Year) {
+                $.ajax({
+                    url: '@Url.Action(PortalController.SSaveYear, PortalController.SController)',
+                    type: 'POST',
+                    data: {
+                                __RequestVerificationToken: tokenpost1,
+                                Year: Year
+                    },
+                    success: function (response) {
+                        location.reload();
+                            },
+                });
+            }
+            function setTokenSentToServer(sent) {
+                window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+            }
+            function isTokenSentToServer() {
+                return window.localStorage.getItem('sentToServer') === '1';
+            }
+            //messaging.onMessage(function (payload) {
+            //    customnotify(payload.notification.title, payload.notification.body, payload.fcmOptions.link)
+            //    console.log("Message received. ", payload);
+            //});
+            //function customnotify(title, desc, url) {
+            //    var notification = new Notification(title, {
+            //        //icon: 'http://Your_Website.com/logo.png',
+            //        body: desc,
+            //    });
+
+            //    /*  تابع زمانی که روی نوتیفیکیشن کلیک می شود.*/
+            //    notification.onclick = function () {
+            //        /*  زمان اجرا صفحه به آدرس url باز می شود.*/
+            //        window.open(url);
+            //    };
+
+            //    /* تابع برگشتی زمانی که نوتیفیکیشن بسته می شود. */
+            //    notification.onclose = function () {
+            //        console.log('نوتیفیکیشن بسته شد');
+            //    };
+            //}
+        });
+    </script>
+    <!-- Initialize Firebase -->
+    @RenderSection("footer2", false)
+    <script>
+        $(document).ready(function () {
+         var form = $('form');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            function checkUserEmail(name) {
+                var r = false;
+                $.ajax({
+                    url: '@Url.Action("CheckEmail", HomeController.SController)',
+                    type: 'POST',
+                    data: {
+                                __RequestVerificationToken: token,
+                                email: name
+                    },
+                    async: false,
+                    success: function (response) {
+                                r = response;
+                            },
+                });
+                return r;
+}
+
+
+            $('form').validator({
+                custom: {
+                    filesize: function ($el) {
+                        var maxBytes = $el.data('filesize') * 1024 * 1024
+                        if ($el[0].files[0] && $el[0].files[0].size >= maxBytes) {
+                            return "فایل باید از  " + maxBytes / 1024 / 1024 + " MB کمتر باشد."
+                        }
+                    },
+                    filetype: function ($el) {
+                        var acceptableTypes = $el.data('filetype').split(',');
+                        if ($el[0].files[0] && !acceptableTypes.includes($el[0].files[0].type)) {
+
+                            return "فرمت jpeg یا png"
+                        }
+                    },
+                    emailcheck: function ($el) {
+                        if (checkUserEmail($el.val()) == true) {
+                            return " ایمیل تکراریست.";
+                        }
+
+                    }
+                }
+            });
+        });
+    </script>
+    @RenderSection("footer")
+</body>
+</html>

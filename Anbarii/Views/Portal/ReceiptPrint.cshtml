@@ -1,0 +1,149 @@
+﻿@model  Receipt
+@using Anbarii.Classes
+@using Anbarii.Models
+@{
+    AnbariiEntities db = new AnbariiEntities();
+    // Model = db.Receipts.Where(i => i.ID.Equals(Model.ID) && i.WherHouseID.Equals(Model.WherHouseID)).FirstOrDefault();
+    Driver driver = Model.Driver;
+    User destination = Model.ReceiptDetails.First().Load.Owner;
+    ViewBag.Title = "رسید دریافت";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+    <style>
+        .box b {
+            border-bottom: 2px solid gray
+        }
+
+        @@media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .printarea, .printarea * {
+                visibility: visible;
+            }
+
+            .table thead tr th {
+                border-color: #000 !important;
+                background-color: #808080 !important;
+            }
+
+            .table tbody tr td {
+                border-color: #000 !important;
+            }
+
+            .content-wrapper {
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-success">
+                <h3 class="card-title">ViewBag.Title</h3>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-rose print-btn" type="button">پرینت</button>
+                <div class="printarea" style="border:1px solid #808080;border-radius:2%;padding:1%">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-xs-3">
+                                <h5>شماره رسید:@Model.ID</h5>
+                            </div>
+                            <div class="col-xs-6" style="text-align:center">
+                                <h2>@Model.User.Name_Company</h2>
+                                <h4>@Model.User.Adress</h4>
+                            </div>
+                            <div class="col-xs-3" style="vertical-align:middle;padding:3%">
+                                <h5>تلفن: @Model.User.Phone</h5>
+                                <h5>موبایل: @Model.User.Mobile</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-xs-3">
+                                <h5>تاریخ: @Model.Date.MiladiTopersian()   </h5>
+                            </div>
+
+                            <div class="col-xs-6" style="text-align:center">
+                                <h3>برگ رسید</h3>
+                            </div>
+                            <div class="col-xs-3" style="vertical-align:middle;padding:3%">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <p>جناب آقای/سرکار خانم:&emsp; <b>@destination.Name</b> &emsp;شرکت محترم:&emsp; <b>@destination.Name_Company</b></p>
+                            <br />
+                            <p>بدینوسیله اعلام میگردد، کالای مشروح زیر که به موجب  &emsp;<b>رسید @Model.ID </b>&emsp; به شرکت&emsp; <b>@driver.Company_Name</b> &emsp;واگذار گردیده، از آقا/خانم&emsp; <b>@driver.Name</b> &emsp;به وسیله نقلیه&emsp; <b>@driver.ID</b> &emsp;کد ملی&emsp; <b>@driver.Code</b> &emsp;تلفن همراه&emsp; <b>@driver.Mobile</b> &emsp;دریافت گردید.</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 50px; margin-left:auto;margin-right:auto;">
+                        <table id="DataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>ردیف</th>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                    <th>واحد وزن</th>
+                                    <th>وزن</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ReceiptDetails.Select((value, i) => new { value, i }))
+                                {
+
+                                    <tr>
+                                        <td>@(item.i + 1)</td>
+                                        <td>@item.value.Load.Name</td>
+                                        <td>@item.value.Count @item.value.Type.Name</td>
+                                        <td>@item.value.Weight @item.value.WeightType</td>
+                                        <td>@(item.value.Weight * item.value.Count) @item.value.WeightType</td>
+                                    </tr>
+
+                                }
+                                <tr>
+                                    <td colspan="2">
+                                        مجموع: &emsp;&emsp;&emsp;&emsp;&emsp; @Number.Numtostr(Model.ReceiptDetails.Sum(i => i.Count).ToString())
+                                    </td>
+                                    <td>@Model.ReceiptDetails.Sum(i => i.Count)</td>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="row" style="margin-bottom:10%;margin-top:10%">
+
+                        <div class="col-xs-6" style="text-align:center">
+                            <p><b>كالاي مشروحه در متن اين ورقه تماما بدون عيب به اينجانب تحويل گرديد</b></p>
+                            <h3>مهر و امضا انبار</h3>
+                            <h6>@Model.User.Name_Company</h6>
+                        </div>
+                        <div class="col-xs-6" style="text-align:center">
+                            <p><b></b></p>
+                            <h3>امضا تحویل گیرنده</h3>
+                            <h6>@driver.Name</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section footer{
+    <script>
+        $(".print-btn").click(function () {
+            window.print();
+        });
+    </script>
+}
+
+
+

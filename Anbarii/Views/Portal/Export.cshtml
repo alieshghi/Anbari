@@ -1,0 +1,184 @@
+﻿@model  Row
+@using Anbarii.Classes.Values
+@using Anbarii.Controllers
+@using Anbarii.Classes
+@using Anbarii.Models
+@{
+    AnbariiEntities db = new AnbariiEntities();
+    Driver driver = new Driver();
+    ViewBag.Title = "خروج بار";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+    <style>
+        .labeel {
+            text-align: left
+        }
+    </style>
+
+
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">local_shipping</i>
+                </div>
+                <h3 class="card-title">اطلاعات خروج بار</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="col-md-12">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(i => i.RowID)
+                            <div class="row">
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    <div class="ui search ">
+                                        <div>
+                                            @Html.TextBoxFor(i => Model.Driver.ID, new { @class = "form-control prompt", placeholder = "22الف222ایران22", @required = "required", @data_error = "پلاک اجباریست.", maxlength = "15", data_max_error = "حداکثر کارکتر 15" })
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="results"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(i => Model.Driver.Name, "نام", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(i => Model.Driver.Name, new { @class = "form-control", @required = "required", @data_error = "نام اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(i => Model.Driver.Mobile, "موبایل", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(i => Model.Driver.Mobile, new { @class = "form-control", pattern = "^[-0-9]*$", @required = "required", @data_error = "موبایل اجباریست.", maxlength = "11", data_max_error = "حداکثر کارکتر 11", data_minlength = "11", data_maxlenght_error = "حداقل کارکتر 11" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(i => Model.Driver.Code, "کدملی", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(i => Model.Driver.Code, new { @class = "form-control", pattern = "^[-0-9]*$", @required = "required", @data_error = "کدملی اجباریست.", maxlength = "10", data_max_error = "حداکثر کارکتر 11", data_minlength = "10", data_maxlenght_error = "حداقل کارکتر 10" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(i => Model.Driver.Company_Name, "نام باربری", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(i => Model.Driver.Company_Name, new { @class = "form-control", @required = "required", @data_error = "نام شرکت اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(i => Model.Inventory_price, "هزینه انبارداری", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(i => Model.Inventory_price, new { type = "number", @class = "form-control", @required = "required", @data_error = "نام شرکت اجباریست.", min = "0" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback col-lg-4 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(i => Model.Packaging_Price, "هزینه بارچینی", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(i => Model.Packaging_Price, new { type = "number", @class = "form-control", @required = "required", @data_error = "کدملی اجباریست.", min = "0" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <span class="group-btn">
+                                <input type="submit" value="ثبت" class="btn btn-warning btn-md" />
+                            </span>
+                        </div>
+
+                        <br />
+                    }
+
+
+                </div>
+                <div class="row">
+                    <div class="table-responsive" style="margin-top: 50px; margin-left:auto;margin-right:auto">
+                        <table id="DataTable" class="print table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>ردیف</th>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                    <th>وزن واحد</th>
+                                    <th>وزن</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RowDetails.Select((Value, Identify) => new
+                                {
+                                    ID = Identify++,
+                                    Name = Value.LoadS.Name,
+                                    Count = Value.Count.ToString() + " " + Value.Type.Name,
+                                    Weightunit = Value.Weight.ToString() + " " + Value.WeightType,
+                                    Weight = (Value.Weight * Value.Count).ToString() + " " + Value.WeightType,
+
+                                }))
+                                {
+
+                                <tr>
+                                    <td>@(item.ID + 1)</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Count</td>
+                                    <td>@item.Weightunit</td>
+                                    <td>@item.Weight</td>
+                                </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var content = [
+                @foreach(var item in db.Drivers) {
+                    <text>
+                { title: '@item.ID' },
+                </text>
+        }     ];
+            $('.ui.search')
+                .search({
+                    source: content
+                });
+
+
+             function country() {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("Driver", PortalController.SController)/'+ $('#Driver_ID').val(),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#Driver_Name").val(data.Name);
+                        $("#Driver_Mobile").val(data.Mobile);
+                        $("#Driver_Code").val(data.Code);
+                         $("#Driver_Company_Name").val(data.Company_Name);
+                    },
+                    error: function () {  }
+                });
+            }
+            $('#Driver_Name').focusin(function () {
+
+                country();
+            });
+        });
+
+    </script>
+
+}
+
+
+

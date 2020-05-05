@@ -1,0 +1,1848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AnbariiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cards">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TerminalID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RealName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="UserSourceID" />
+            <PropertyRef Name="UserDestinationID" />
+          </Key>
+          <Property Name="UserSourceID" Type="bigint" Nullable="false" />
+          <Property Name="UserDestinationID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Company_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Loads">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="float" Nullable="false" />
+          <Property Name="Weight_Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Load_TypeID" Type="int" Nullable="false" />
+          <Property Name="Inventory_price" Type="int" Nullable="false" />
+          <Property Name="Packaging_Price" Type="int" Nullable="false" />
+          <Property Name="Add_Date" Type="datetime" Nullable="false" />
+          <Property Name="Change_date" Type="datetime" Nullable="false" />
+          <Property Name="OwnerID" Type="bigint" Nullable="false" />
+          <Property Name="WherhouseID" Type="bigint" Nullable="false" />
+          <Property Name="Details" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Input_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pic1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pic2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pic3" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pic4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pic5" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationCategories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="Pariority" Type="int" Nullable="false" />
+          <Property Name="Seen" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="StatusPayment" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CardID" Type="int" Nullable="false" />
+          <Property Name="SaleReferenceId" Type="bigint" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StatePortal" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Plans">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Task" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReceiptDetails">
+          <Key>
+            <PropertyRef Name="LoadID" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="LoadID" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="float" Nullable="false" />
+          <Property Name="Details" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="WeightType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Load_TypeID" Type="int" Nullable="false" />
+          <Property Name="WherHouseID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receipts">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="WherHouseID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="WherHouseID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="DriverID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Detail" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RowDetails">
+          <Key>
+            <PropertyRef Name="LoadID_Source" />
+            <PropertyRef Name="LoadID_Destination" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="LoadID_Source" Type="bigint" Nullable="false" />
+          <Property Name="LoadID_Destination" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="float" Nullable="false" />
+          <Property Name="Details" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="WeightType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Load_TypeID" Type="int" Nullable="false" />
+          <Property Name="WherHouseID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rows">
+          <Key>
+            <PropertyRef Name="RowID" />
+            <PropertyRef Name="WherHouseID" />
+          </Key>
+          <Property Name="RowID" Type="bigint" Nullable="false" />
+          <Property Name="WherHouseID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="invoiceID" Type="int" Nullable="false" />
+          <Property Name="DriverID" Type="nvarchar" MaxLength="20" />
+          <Property Name="Inventory_price" Type="int" Nullable="false" />
+          <Property Name="Packaging_Price" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiteSettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="CodePosti" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="UserIdReceiver" Type="bigint" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Seen" Type="bit" Nullable="false" />
+          <Property Name="TicketID" Type="bigint" Nullable="false" />
+          <Property Name="UserIdSender" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificatioToken" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_Company" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Economic_Code" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="Code_Posti" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TryCount" Type="int" Nullable="false" />
+          <Property Name="Token" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+          <Property Name="Edite" Type="bit" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Validate" Type="bit" Nullable="false" />
+          <Property Name="ExpireDate" Type="datetime" />
+          <Property Name="ForgotExpireDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Destination">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="UserDestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Loads_Owner">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Loads" Type="Self.Loads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loads">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Loads_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="Loads" Type="Self.Loads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loads">
+              <PropertyRef Name="Load_TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Loads_WhereHouse">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Loads" Type="Self.Loads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loads">
+              <PropertyRef Name="WherhouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_NotificationCategories">
+          <End Role="NotificationCategories" Type="Self.NotificationCategories" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationCategories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Plans">
+          <End Role="Plans" Type="Self.Plans" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plans">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Cards">
+          <End Role="Cards" Type="Self.Cards" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cards">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="CardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Loads">
+          <End Role="Loads" Type="Self.Loads" Multiplicity="1" />
+          <End Role="ReceiptDetails" Type="Self.ReceiptDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loads">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReceiptDetails">
+              <PropertyRef Name="LoadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Receipts">
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="1" />
+          <End Role="ReceiptDetails" Type="Self.ReceiptDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipts">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="WherHouseID" />
+            </Principal>
+            <Dependent Role="ReceiptDetails">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="ReceiptDetails" Type="Self.ReceiptDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReceiptDetails">
+              <PropertyRef Name="Load_TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ReceiptDetails" Type="Self.ReceiptDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReceiptDetails">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipts_Drivers">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="DriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipts_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_D">
+          <End Role="Loads" Type="Self.Loads" Multiplicity="1" />
+          <End Role="RowDetails" Type="Self.RowDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loads">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetails">
+              <PropertyRef Name="LoadID_Destination" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_Rows">
+          <End Role="Rows" Type="Self.Rows" Multiplicity="1" />
+          <End Role="RowDetails" Type="Self.RowDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rows">
+              <PropertyRef Name="RowID" />
+              <PropertyRef Name="WherHouseID" />
+            </Principal>
+            <Dependent Role="RowDetails">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_S">
+          <End Role="Loads" Type="Self.Loads" Multiplicity="1" />
+          <End Role="RowDetails" Type="Self.RowDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loads">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetails">
+              <PropertyRef Name="LoadID_Source" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="RowDetails" Type="Self.RowDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetails">
+              <PropertyRef Name="Load_TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="RowDetails" Type="Self.RowDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetails">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rows_Drivers">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="Rows" Type="Self.Rows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rows">
+              <PropertyRef Name="DriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rows_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Rows" Type="Self.Rows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rows">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Source">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="UserSourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_NotificationCategories">
+          <End Role="NotificationCategories" Type="Self.NotificationCategories" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationCategories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Tickets">
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+          <End Role="Tickets1" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tickets1">
+              <PropertyRef Name="TicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_UsersReceiver">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="UserIdReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_UsersSender">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="UserIdSender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AnbariiModelStoreContainer">
+          <EntitySet Name="Cards" EntityType="Self.Cards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Loads" EntityType="Self.Loads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationCategories" EntityType="Self.NotificationCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plans" EntityType="Self.Plans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptDetails" EntityType="Self.ReceiptDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RowDetails" EntityType="Self.RowDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rows" EntityType="Self.Rows" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteSettings" EntityType="Self.SiteSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Types" EntityType="Self.Types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Destination" Association="Self.FK_Destination">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Loads_Owner" Association="Self.FK_Loads_Owner">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Loads" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Loads_Types" Association="Self.FK_Loads_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Loads" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Loads_WhereHouse" Association="Self.FK_Loads_WhereHouse">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Loads" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_NotificationCategories" Association="Self.FK_Notifications_NotificationCategories">
+            <End Role="NotificationCategories" EntitySet="NotificationCategories" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users" Association="Self.FK_Notifications_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Plans" Association="Self.FK_Orders_Plans">
+            <End Role="Plans" EntitySet="Plans" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Cards" Association="Self.FK_Payments_Cards">
+            <End Role="Cards" EntitySet="Cards" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Orders" Association="Self.FK_Payments_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Loads" Association="Self.FK_ReceiptDetails_Loads">
+            <End Role="Loads" EntitySet="Loads" />
+            <End Role="ReceiptDetails" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Receipts" Association="Self.FK_ReceiptDetails_Receipts">
+            <End Role="Receipts" EntitySet="Receipts" />
+            <End Role="ReceiptDetails" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Types" Association="Self.FK_ReceiptDetails_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="ReceiptDetails" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Users" Association="Self.FK_ReceiptDetails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ReceiptDetails" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_Drivers" Association="Self.FK_Receipts_Drivers">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_Users" Association="Self.FK_Receipts_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_D" Association="Self.FK_RowDetails_D">
+            <End Role="Loads" EntitySet="Loads" />
+            <End Role="RowDetails" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_Rows" Association="Self.FK_RowDetails_Rows">
+            <End Role="Rows" EntitySet="Rows" />
+            <End Role="RowDetails" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_S" Association="Self.FK_RowDetails_S">
+            <End Role="Loads" EntitySet="Loads" />
+            <End Role="RowDetails" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_Types" Association="Self.FK_RowDetails_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="RowDetails" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_Users" Association="Self.FK_RowDetails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RowDetails" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rows_Drivers" Association="Self.FK_Rows_Drivers">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Rows" EntitySet="Rows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rows_Users" Association="Self.FK_Rows_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rows" EntitySet="Rows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Source" Association="Self.FK_Source">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_NotificationCategories" Association="Self.FK_Tickets_NotificationCategories">
+            <End Role="NotificationCategories" EntitySet="NotificationCategories" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Tickets" Association="Self.FK_Tickets_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="Tickets1" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_UsersReceiver" Association="Self.FK_Tickets_UsersReceiver">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_UsersSender" Association="Self.FK_Tickets_UsersSender">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AnbariiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AnbariiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Loads" EntityType="AnbariiModel.Load" />
+          <EntitySet Name="Plans" EntityType="AnbariiModel.Plan" />
+          <EntitySet Name="ReceiptDetails" EntityType="AnbariiModel.ReceiptDetail" />
+          <EntitySet Name="Receipts" EntityType="AnbariiModel.Receipt" />
+          <EntitySet Name="Roles" EntityType="AnbariiModel.Role" />
+          <EntitySet Name="RowDetails" EntityType="AnbariiModel.RowDetail" />
+          <EntitySet Name="sysdiagrams" EntityType="AnbariiModel.sysdiagram" />
+          <EntitySet Name="Types" EntityType="AnbariiModel.Type" />
+          <EntitySet Name="Users" EntityType="AnbariiModel.User" />
+          <AssociationSet Name="FK_Loads_Owner" Association="AnbariiModel.FK_Loads_Owner">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Load" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Loads_Types" Association="AnbariiModel.FK_Loads_Types">
+            <End Role="Type" EntitySet="Types" />
+            <End Role="Load" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Loads_WhereHouse" Association="AnbariiModel.FK_Loads_WhereHouse">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Load" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Loads" Association="AnbariiModel.FK_ReceiptDetails_Loads">
+            <End Role="Load" EntitySet="Loads" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_D" Association="AnbariiModel.FK_RowDetails_D">
+            <End Role="Load" EntitySet="Loads" />
+            <End Role="RowDetail" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_S" Association="AnbariiModel.FK_RowDetails_S">
+            <End Role="Load" EntitySet="Loads" />
+            <End Role="RowDetail" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Receipts" Association="AnbariiModel.FK_ReceiptDetails_Receipts">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Types" Association="AnbariiModel.FK_ReceiptDetails_Types">
+            <End Role="Type" EntitySet="Types" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="AnbariiModel.FK_Users_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_Types" Association="AnbariiModel.FK_RowDetails_Types">
+            <End Role="Type" EntitySet="Types" />
+            <End Role="RowDetail" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Contacts" Association="AnbariiModel.Contacts">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserR" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Rows" EntityType="AnbariiModel.Row" />
+          <AssociationSet Name="FK_RowDetails_Rows" Association="AnbariiModel.FK_RowDetails_Rows">
+            <End Role="Row" EntitySet="Rows" />
+            <End Role="RowDetail" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rows_Users" Association="AnbariiModel.FK_Rows_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Row" EntitySet="Rows" />
+          </AssociationSet>
+          <EntitySet Name="Drivers" EntityType="AnbariiModel.Driver" />
+          <AssociationSet Name="FK_Receipts_Drivers" Association="AnbariiModel.FK_Receipts_Drivers">
+            <End Role="Driver" EntitySet="Drivers" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rows_Drivers" Association="AnbariiModel.FK_Rows_Drivers">
+            <End Role="Driver" EntitySet="Drivers" />
+            <End Role="Row" EntitySet="Rows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_Users" Association="AnbariiModel.FK_Receipts_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RowDetails_Users" Association="AnbariiModel.FK_RowDetails_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="RowDetail" EntitySet="RowDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetails_Users" Association="AnbariiModel.FK_ReceiptDetails_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <EntitySet Name="SiteSettings" EntityType="AnbariiModel.SiteSetting" />
+          <EntitySet Name="NotificationCategories" EntityType="AnbariiModel.NotificationCategory" />
+          <EntitySet Name="Notifications" EntityType="AnbariiModel.Notification" />
+          <EntitySet Name="Orders" EntityType="AnbariiModel.Order" />
+          <EntitySet Name="Payments" EntityType="AnbariiModel.Payment" />
+          <AssociationSet Name="FK_Notifications_NotificationCategories" Association="AnbariiModel.FK_Notifications_NotificationCategories">
+            <End Role="NotificationCategory" EntitySet="NotificationCategories" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users" Association="AnbariiModel.FK_Notifications_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Plans" Association="AnbariiModel.FK_Orders_Plans">
+            <End Role="Plan" EntitySet="Plans" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Users" Association="AnbariiModel.FK_Orders_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Orders" Association="AnbariiModel.FK_Payments_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <EntitySet Name="Cards" EntityType="AnbariiModel.Card" />
+          <AssociationSet Name="FK_Payments_Cards" Association="AnbariiModel.FK_Payments_Cards">
+            <End Role="Card" EntitySet="Cards" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <EntitySet Name="Tickets" EntityType="AnbariiModel.Ticket" />
+          <AssociationSet Name="FK_Tickets_NotificationCategories" Association="AnbariiModel.FK_Tickets_NotificationCategories">
+            <End Role="NotificationCategory" EntitySet="NotificationCategories" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Tickets" Association="AnbariiModel.FK_Tickets_Tickets">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Ticket1" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_UsersReceiver" Association="AnbariiModel.FK_Tickets_UsersReceiver">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_UsersSender" Association="AnbariiModel.FK_Tickets_UsersSender">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <EntitySet Name="Tokens" EntityType="AnbariiModel.Token" />
+          <AssociationSet Name="FK_Tokens_Users" Association="AnbariiModel.FK_Tokens_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Load">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="Weight_Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Load_TypeID" Type="Int32" Nullable="false" />
+          <Property Name="Inventory_price" Type="Int32" Nullable="false" />
+          <Property Name="Packaging_Price" Type="Int32" Nullable="false" />
+          <Property Name="Add_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Change_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OwnerID" Type="Int64" Nullable="false" />
+          <Property Name="WherhouseID" Type="Int64" Nullable="false" />
+          <Property Name="Details" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Input_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pic1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pic2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pic3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pic4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pic5" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Owner" Relationship="AnbariiModel.FK_Loads_Owner" FromRole="Load" ToRole="User" />
+          <NavigationProperty Name="Type" Relationship="AnbariiModel.FK_Loads_Types" FromRole="Load" ToRole="Type" />
+          <NavigationProperty Name="Wherhouse" Relationship="AnbariiModel.FK_Loads_WhereHouse" FromRole="Load" ToRole="User" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="AnbariiModel.FK_ReceiptDetails_Loads" FromRole="Load" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="RowDetailsD" Relationship="AnbariiModel.FK_RowDetails_D" FromRole="Load" ToRole="RowDetail" />
+          <NavigationProperty Name="RowDetailsS" Relationship="AnbariiModel.FK_RowDetails_S" FromRole="Load" ToRole="RowDetail" />
+        </EntityType>
+        <EntityType Name="Plan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Task" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="AnbariiModel.FK_Orders_Plans" FromRole="Plan" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ReceiptDetail">
+          <Key>
+            <PropertyRef Name="LoadID" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="LoadID" Type="Int64" Nullable="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="Details" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WeightType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Load_TypeID" Type="Int32" Nullable="false" />
+          <Property Name="WherHouseID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Load" Relationship="AnbariiModel.FK_ReceiptDetails_Loads" FromRole="ReceiptDetail" ToRole="Load" />
+          <NavigationProperty Name="Receipt" Relationship="AnbariiModel.FK_ReceiptDetails_Receipts" FromRole="ReceiptDetail" ToRole="Receipt" />
+          <NavigationProperty Name="Type" Relationship="AnbariiModel.FK_ReceiptDetails_Types" FromRole="ReceiptDetail" ToRole="Type" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_ReceiptDetails_Users" FromRole="ReceiptDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="WherHouseID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="WherHouseID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DriverID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="AnbariiModel.FK_ReceiptDetails_Receipts" FromRole="Receipt" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="Driver" Relationship="AnbariiModel.FK_Receipts_Drivers" FromRole="Receipt" ToRole="Driver" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_Receipts_Users" FromRole="Receipt" ToRole="User" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="AnbariiModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RowDetail">
+          <Key>
+            <PropertyRef Name="LoadID_Source" />
+            <PropertyRef Name="LoadID_Destination" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="LoadID_Source" Type="Int64" Nullable="false" />
+          <Property Name="LoadID_Destination" Type="Int64" Nullable="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="Details" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WeightType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Load_TypeID" Type="Int32" Nullable="false" />
+          <Property Name="WherHouseID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="LoadD" Relationship="AnbariiModel.FK_RowDetails_D" FromRole="RowDetail" ToRole="Load" />
+          <NavigationProperty Name="LoadS" Relationship="AnbariiModel.FK_RowDetails_S" FromRole="RowDetail" ToRole="Load" />
+          <NavigationProperty Name="Type" Relationship="AnbariiModel.FK_RowDetails_Types" FromRole="RowDetail" ToRole="Type" />
+          <NavigationProperty Name="Row" Relationship="AnbariiModel.FK_RowDetails_Rows" FromRole="RowDetail" ToRole="Row" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_RowDetails_Users" FromRole="RowDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Loads" Relationship="AnbariiModel.FK_Loads_Types" FromRole="Type" ToRole="Load" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="AnbariiModel.FK_ReceiptDetails_Types" FromRole="Type" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="RowDetails" Relationship="AnbariiModel.FK_RowDetails_Types" FromRole="Type" ToRole="RowDetail" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_Company" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Economic_Code" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Code_Posti" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TryCount" Type="Int32" Nullable="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edite" Type="Boolean" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="AnbariiModel.FK_Loads_Owner" FromRole="User" ToRole="Load" />
+          <NavigationProperty Name="Loads" Relationship="AnbariiModel.FK_Loads_WhereHouse" FromRole="User" ToRole="Load" />
+          <NavigationProperty Name="Role" Relationship="AnbariiModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UsersR" Relationship="AnbariiModel.Contacts" FromRole="User" ToRole="UserR" />
+          <NavigationProperty Name="Users" Relationship="AnbariiModel.Contacts" FromRole="UserR" ToRole="User" />
+          <NavigationProperty Name="Rows" Relationship="AnbariiModel.FK_Rows_Users" FromRole="User" ToRole="Row" />
+          <NavigationProperty Name="Receipts" Relationship="AnbariiModel.FK_Receipts_Users" FromRole="User" ToRole="Receipt" />
+          <NavigationProperty Name="RowDetails" Relationship="AnbariiModel.FK_RowDetails_Users" FromRole="User" ToRole="RowDetail" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="AnbariiModel.FK_ReceiptDetails_Users" FromRole="User" ToRole="ReceiptDetail" />
+          <Property Name="Validate" Type="Boolean" Nullable="false" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="ForgotExpireDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Notifications" Relationship="AnbariiModel.FK_Notifications_Users" FromRole="User" ToRole="Notification" />
+          <NavigationProperty Name="Orders" Relationship="AnbariiModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="ReceivedTickets" Relationship="AnbariiModel.FK_Tickets_UsersReceiver" FromRole="User" ToRole="Ticket" />
+          <NavigationProperty Name="SentTickets" Relationship="AnbariiModel.FK_Tickets_UsersSender" FromRole="User" ToRole="Ticket" />
+          <NavigationProperty Name="Tokens" Relationship="AnbariiModel.FK_Tokens_Users" FromRole="User" ToRole="Token" />
+        </EntityType>
+        <Association Name="FK_Loads_Owner">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Load" Role="Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Loads_Types">
+          <End Type="AnbariiModel.Type" Role="Type" Multiplicity="1" />
+          <End Type="AnbariiModel.Load" Role="Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="Load_TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Loads_WhereHouse">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Load" Role="Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="WherhouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Loads">
+          <End Type="AnbariiModel.Load" Role="Load" Multiplicity="1" />
+          <End Type="AnbariiModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Load">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="LoadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_D">
+          <End Type="AnbariiModel.Load" Role="Load" Multiplicity="1" />
+          <End Type="AnbariiModel.RowDetail" Role="RowDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Load">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetail">
+              <PropertyRef Name="LoadID_Destination" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_S">
+          <End Type="AnbariiModel.Load" Role="Load" Multiplicity="1" />
+          <End Type="AnbariiModel.RowDetail" Role="RowDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Load">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetail">
+              <PropertyRef Name="LoadID_Source" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Receipts">
+          <End Type="AnbariiModel.Receipt" Role="Receipt" Multiplicity="1" />
+          <End Type="AnbariiModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="WherHouseID" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Types">
+          <End Type="AnbariiModel.Type" Role="Type" Multiplicity="1" />
+          <End Type="AnbariiModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="Load_TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="AnbariiModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_Types">
+          <End Type="AnbariiModel.Type" Role="Type" Multiplicity="1" />
+          <End Type="AnbariiModel.RowDetail" Role="RowDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetail">
+              <PropertyRef Name="Load_TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Contacts">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="*" />
+          <End Type="AnbariiModel.User" Role="UserR" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Row">
+          <Key>
+            <PropertyRef Name="RowID" />
+            <PropertyRef Name="WherHouseID" />
+          </Key>
+          <Property Name="RowID" Type="Int64" Nullable="false" />
+          <Property Name="WherHouseID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="invoiceID" Type="Int32" Nullable="false" />
+          <Property Name="DriverID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RowDetails" Relationship="AnbariiModel.FK_RowDetails_Rows" FromRole="Row" ToRole="RowDetail" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_Rows_Users" FromRole="Row" ToRole="User" />
+          <NavigationProperty Name="Driver" Relationship="AnbariiModel.FK_Rows_Drivers" FromRole="Row" ToRole="Driver" />
+          <Property Name="Inventory_price" Type="Int32" Nullable="false" />
+          <Property Name="Packaging_Price" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RowDetails_Rows">
+          <End Type="AnbariiModel.Row" Role="Row" Multiplicity="1" />
+          <End Type="AnbariiModel.RowDetail" Role="RowDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Row">
+              <PropertyRef Name="RowID" />
+              <PropertyRef Name="WherHouseID" />
+            </Principal>
+            <Dependent Role="RowDetail">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rows_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Row" Role="Row" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Row">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Company_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Receipts" Relationship="AnbariiModel.FK_Receipts_Drivers" FromRole="Driver" ToRole="Receipt" />
+          <NavigationProperty Name="Rows" Relationship="AnbariiModel.FK_Rows_Drivers" FromRole="Driver" ToRole="Row" />
+        </EntityType>
+        <Association Name="FK_Receipts_Drivers">
+          <End Type="AnbariiModel.Driver" Role="Driver" Multiplicity="1" />
+          <End Type="AnbariiModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="DriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rows_Drivers">
+          <End Type="AnbariiModel.Driver" Role="Driver" Multiplicity="0..1" />
+          <End Type="AnbariiModel.Row" Role="Row" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Row">
+              <PropertyRef Name="DriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipts_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RowDetails_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.RowDetail" Role="RowDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RowDetail">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetails_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="WherHouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SiteSetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="CodePosti" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="NotificationCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Notifications" Relationship="AnbariiModel.FK_Notifications_NotificationCategories" FromRole="NotificationCategory" ToRole="Notification" />
+          <NavigationProperty Name="Tickets" Relationship="AnbariiModel.FK_Tickets_NotificationCategories" FromRole="NotificationCategory" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Pariority" Type="Int32" Nullable="false" />
+          <Property Name="Seen" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="NotificationCategory" Relationship="AnbariiModel.FK_Notifications_NotificationCategories" FromRole="Notification" ToRole="NotificationCategory" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_Notifications_Users" FromRole="Notification" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Plan" Relationship="AnbariiModel.FK_Orders_Plans" FromRole="Order" ToRole="Plan" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Payments" Relationship="AnbariiModel.FK_Payments_Orders" FromRole="Order" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenceNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusPayment" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CardID" Type="Int32" Nullable="false" />
+          <Property Name="SaleReferenceId" Type="Int64" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StatePortal" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="AnbariiModel.FK_Payments_Orders" FromRole="Payment" ToRole="Order" />
+          <NavigationProperty Name="Card" Relationship="AnbariiModel.FK_Payments_Cards" FromRole="Payment" ToRole="Card" />
+        </EntityType>
+        <Association Name="FK_Notifications_NotificationCategories">
+          <End Type="AnbariiModel.NotificationCategory" Role="NotificationCategory" Multiplicity="1" />
+          <End Type="AnbariiModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Plans">
+          <End Type="AnbariiModel.Plan" Role="Plan" Multiplicity="1" />
+          <End Type="AnbariiModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Orders">
+          <End Type="AnbariiModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="AnbariiModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TerminalID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="AnbariiModel.FK_Payments_Cards" FromRole="Card" ToRole="Payment" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RealName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Payments_Cards">
+          <End Type="AnbariiModel.Card" Role="Card" Multiplicity="1" />
+          <End Type="AnbariiModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="CardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserIdReceiver" Type="Int64" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Seen" Type="Boolean" Nullable="false" />
+          <Property Name="TicketID" Type="Int64" Nullable="false" />
+          <Property Name="UserIdSender" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="NotificationCategory" Relationship="AnbariiModel.FK_Tickets_NotificationCategories" FromRole="Ticket" ToRole="NotificationCategory" />
+          <NavigationProperty Name="Tickets1" Relationship="AnbariiModel.FK_Tickets_Tickets" FromRole="Ticket" ToRole="Ticket1" />
+          <NavigationProperty Name="Ticket1" Relationship="AnbariiModel.FK_Tickets_Tickets" FromRole="Ticket1" ToRole="Ticket" />
+          <NavigationProperty Name="Receiver" Relationship="AnbariiModel.FK_Tickets_UsersReceiver" FromRole="Ticket" ToRole="User" />
+          <NavigationProperty Name="Sender" Relationship="AnbariiModel.FK_Tickets_UsersSender" FromRole="Ticket" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Tickets_NotificationCategories">
+          <End Type="AnbariiModel.NotificationCategory" Role="NotificationCategory" Multiplicity="1" />
+          <End Type="AnbariiModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Tickets">
+          <End Type="AnbariiModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="AnbariiModel.Ticket" Role="Ticket1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket1">
+              <PropertyRef Name="TicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_UsersReceiver">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="UserIdReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_UsersSender">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="UserIdSender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificatioToken" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="AnbariiModel.FK_Tokens_Users" FromRole="Token" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Tokens_Users">
+          <End Type="AnbariiModel.User" Role="User" Multiplicity="1" />
+          <End Type="AnbariiModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AnbariiModelStoreContainer" CdmEntityContainer="AnbariiEntities">
+          <EntitySetMapping Name="Loads">
+            <EntityTypeMapping TypeName="AnbariiModel.Load">
+              <MappingFragment StoreEntitySet="Loads">
+                <ScalarProperty Name="Pic5" ColumnName="Pic5" />
+                <ScalarProperty Name="Pic4" ColumnName="Pic4" />
+                <ScalarProperty Name="Pic3" ColumnName="Pic3" />
+                <ScalarProperty Name="Pic2" ColumnName="Pic2" />
+                <ScalarProperty Name="Pic1" ColumnName="Pic1" />
+                <ScalarProperty Name="Input_Name" ColumnName="Input_Name" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="WherhouseID" ColumnName="WherhouseID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Change_date" ColumnName="Change_date" />
+                <ScalarProperty Name="Add_Date" ColumnName="Add_Date" />
+                <ScalarProperty Name="Packaging_Price" ColumnName="Packaging_Price" />
+                <ScalarProperty Name="Inventory_price" ColumnName="Inventory_price" />
+                <ScalarProperty Name="Load_TypeID" ColumnName="Load_TypeID" />
+                <ScalarProperty Name="Weight_Type" ColumnName="Weight_Type" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plans">
+            <EntityTypeMapping TypeName="AnbariiModel.Plan">
+              <MappingFragment StoreEntitySet="Plans">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptDetails">
+            <EntityTypeMapping TypeName="AnbariiModel.ReceiptDetail">
+              <MappingFragment StoreEntitySet="ReceiptDetails">
+                <ScalarProperty Name="WherHouseID" ColumnName="WherHouseID" />
+                <ScalarProperty Name="Load_TypeID" ColumnName="Load_TypeID" />
+                <ScalarProperty Name="WeightType" ColumnName="WeightType" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoadID" ColumnName="LoadID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="AnbariiModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipts">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WherHouseID" ColumnName="WherHouseID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AnbariiModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RowDetails">
+            <EntityTypeMapping TypeName="AnbariiModel.RowDetail">
+              <MappingFragment StoreEntitySet="RowDetails">
+                <ScalarProperty Name="WherHouseID" ColumnName="WherHouseID" />
+                <ScalarProperty Name="Load_TypeID" ColumnName="Load_TypeID" />
+                <ScalarProperty Name="WeightType" ColumnName="WeightType" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoadID_Destination" ColumnName="LoadID_Destination" />
+                <ScalarProperty Name="LoadID_Source" ColumnName="LoadID_Source" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AnbariiModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="AnbariiModel.Type">
+              <MappingFragment StoreEntitySet="Types">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AnbariiModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ForgotExpireDate" ColumnName="ForgotExpireDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Validate" ColumnName="Validate" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Edite" ColumnName="Edite" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="TryCount" ColumnName="TryCount" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Code_Posti" ColumnName="Code_Posti" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Economic_Code" ColumnName="Economic_Code" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Name_Company" ColumnName="Name_Company" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Contacts" TypeName="AnbariiModel.Contacts" StoreEntitySet="Contacts">
+            <EndProperty Name="UserR">
+              <ScalarProperty Name="ID" ColumnName="UserSourceID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="ID" ColumnName="UserDestinationID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Rows">
+            <EntityTypeMapping TypeName="AnbariiModel.Row">
+              <MappingFragment StoreEntitySet="Rows">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Packaging_Price" ColumnName="Packaging_Price" />
+                <ScalarProperty Name="Inventory_price" ColumnName="Inventory_price" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WherHouseID" ColumnName="WherHouseID" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="AnbariiModel.Driver">
+              <MappingFragment StoreEntitySet="Drivers">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteSettings">
+            <EntityTypeMapping TypeName="AnbariiModel.SiteSetting">
+              <MappingFragment StoreEntitySet="SiteSettings">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="CodePosti" ColumnName="CodePosti" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationCategories">
+            <EntityTypeMapping TypeName="AnbariiModel.NotificationCategory">
+              <MappingFragment StoreEntitySet="NotificationCategories">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="AnbariiModel.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
+                <ScalarProperty Name="Pariority" ColumnName="Pariority" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="AnbariiModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="AnbariiModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="StatePortal" ColumnName="StatePortal" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="SaleReferenceId" ColumnName="SaleReferenceId" />
+                <ScalarProperty Name="CardID" ColumnName="CardID" />
+                <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cards">
+            <EntityTypeMapping TypeName="AnbariiModel.Card">
+              <MappingFragment StoreEntitySet="Cards">
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="TerminalID" ColumnName="TerminalID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="AnbariiModel.Ticket">
+              <MappingFragment StoreEntitySet="Tickets">
+                <ScalarProperty Name="UserIdSender" ColumnName="UserIdSender" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UserIdReceiver" ColumnName="UserIdReceiver" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="AnbariiModel.Token">
+              <MappingFragment StoreEntitySet="Tokens">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NotificatioToken" ColumnName="NotificatioToken" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

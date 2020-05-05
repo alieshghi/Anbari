@@ -1,0 +1,170 @@
+﻿@model  List<NotificationCategory>
+@using Anbarii.Models
+@{
+    ViewBag.Title = "دسته پیام ها";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css" />
+    <link href="~/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/colReorder.dataTables.min.css" rel="stylesheet" />
+
+}
+
+
+<div class="row">
+    <div class="col-lg-5 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h3 class="card-title">افزودن</h3>
+            </div>
+            <div class="card-body">
+                @if (TempData["ChangePass"] != null)
+                {
+                    if ((Boolean)TempData["ChangePass"] == true)
+                    {
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>با موفقیت افزوده شد.</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+                }
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="form-group col-lg-12 has-feedback bmd-form-group ">
+                            @Html.Label("نام دسته", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.TextBox("name", "", htmlAttributes: new { @class = "form-control", required = "required", data_error = "نام دسته اجباریست." })
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <p style="clear:both"></p>
+                    <div>
+                        <span class="group-btn">
+                            <input type="submit" value="ثبت" class="btn btn-primary btn-md" />
+                        </span>
+                    </div>
+                    <br />
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h3 class="card-title">دسته ها</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive" style="margin-top: 50px; margin-left:auto;margin-right:auto;">
+
+
+                    <table id="DataTable" class="print table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>نام</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var i in Model)
+                            {
+
+                                <tr>
+                                    <td>@i.ID</td>
+                                    <td>@i.Name</td>
+                                </tr>
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" language="javascript" src="~/js/dataTables.buttons.min.js"></script>
+    <script src="~/js/buttons.colVis.min.js"></script>
+    <script src="~/js/buttons.print.js"></script>
+    <script src="~/js/dataTables.colReorder.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#DataTable').DataTable({
+                "ordering": false,
+                colReorder: true,
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "همه"]],
+                dom: 'Bfrtip',
+                columnDefs: [
+                    {
+                        targets: 1,
+                        className: 'noVis'
+                    }
+                ],
+                language: {
+                    "emptyTable": "هیچ موردی یافت نشد.",
+                    "zeroRecords": "هیچ موردی یافت نشد.",
+                    "info": "نمایش _START_ تا _END_ از _TOTAL_ مورد",
+                    "infoEmpty": "نمایش 0 تا 0 از 0 مورد",
+                    "infoFiltered": "(جداشده از _MAX_ کل موارد)",
+                    "lengthMenu": "نمایش _MENU_ مورد",
+                    "loadingRecords": "در حال بارگذاری...",
+                    "processing": "درحال پردازش...",
+                    search: "_INPUT_",
+                    searchPlaceholder: "جستجو...",
+                    "paginate": {
+                        "first": "اولین",
+                        "last": "آخرین",
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    },
+                    buttons: {
+                        pageLength: {
+                            _: "نمایش %d مورد",
+                            '-1': "نمایش همه"
+                        }
+                    }
+                },
+                buttons: [
+                    'pageLength',
+                    {
+                        text: 'چاپ',
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'excel',
+                    {
+                        extend: 'colvisGroup',
+                        text: 'نمایش همه ستون ها',
+                        show: ':hidden'
+                    },
+                    {
+                        extend: 'colvisGroup',
+                        text: 'عدم نمایش همه',
+                        hide: ':visible'
+                    },
+                    {
+                        text: 'انتخاب ستون',
+                        extend: 'colvis',
+                        columns: ':not(.noVis)'
+                    }
+                ]
+            });
+        });
+
+    </script>
+}
+
+
+

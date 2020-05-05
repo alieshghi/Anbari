@@ -1,0 +1,29 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = "~/Views/Shared/_Error_Layout.cshtml";
+    ViewBag.Title = "خطا";
+}
+<div class="list-header clearfix">
+    <span>خطا</span>
+</div>
+<div class="list-sfs-holder">
+    <div class="alert alert-warning">
+        خطایی رخ داده است. لطفا  با پشتیبان سایت  ارتباط بگیرید.
+    </div>
+    @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+    {
+        <div style="direction:ltr">
+            <p>
+                <b>Exception:</b> @Model.Exception.Message<br />
+                <b>Controller:</b> @Model.ControllerName<br />
+                <b>Action:</b> @Model.ActionName
+            </p>
+            <div style="overflow:scroll">
+                <pre>
+                    @Model.Exception.StackTrace
+                </pre>
+            </div>
+            
+        </div>
+    }
+</div>

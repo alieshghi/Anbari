@@ -1,0 +1,93 @@
+﻿@model  User
+@using Anbarii.Models
+@using Anbarii.Controllers
+@{
+    TempData[PortalController.SPeople] = "active";
+    ViewBag.Title = "افزودن مخاطب";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h3 class="card-title">ثبت مخاطب جدید</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken();
+                        <div class="col-md-8">
+                            @Html.ValidationSummary(excludePropertyErrors: false, message: "", htmlAttributes: new { @class = "text-danger" })
+                            <div>
+                                <div class="form-group has-feedback bmd-form-group">
+                                    @Html.Label(expression: "Token", labelText: "توکن", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBox(name: "Token", value: null, htmlAttributes: new { @class = "form-control", @required = "required", @data_error = "توکن اجباریست." })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <p style="clear:both"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="group-btn">
+                                <input type="submit" value="ثبت" class="btn btn-primary btn-md" />
+                            </span>
+                        </div>
+                        <br />
+                    }
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="table-responsive" style="margin-top: 50px; margin-left:auto;margin-right:auto">
+
+                        <table id="DataTable" class="print table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>نام شرکت</th>
+                                    <th>نام</th>
+                                    <th>موبایل</th>
+                                    <th>تلفن</th>
+                                    <th>کدملی</th>
+                                    <th>کد اقتصادی</th>
+                                    <th>آدرس</th>
+                                    <th>کد پستی</th>
+                                    <th>ایمیل</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    <tr>
+                                        <td> @Model.Name_Company</td>
+                                        <td>@Model.Name</td>
+                                        <td>@Model.Mobile</td>
+                                        <td>@Model.Phone</td>
+                                        <td>@Model.Code</td>
+                                        <td>@Model.Economic_Code</td>
+                                        <td>@Model.Adress</td>
+                                        <td>@Model.Code_Posti</td>
+                                        <td><a target="_top" href="mailto:@Model.Email"> @Model.Email</a></td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section footer{
+}
+
+
+

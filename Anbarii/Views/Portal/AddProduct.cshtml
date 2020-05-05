@@ -1,0 +1,283 @@
+﻿@model  Receipt
+@using Anbarii.Classes.Values
+@using Anbarii.Controllers
+@using Anbarii.Classes
+@using Anbarii.Models
+@{
+    TempData[PortalController.SProducts] = "active";
+    ReceiptDetail receiptDetail = new ReceiptDetail();
+    AnbariiEntities db = new AnbariiEntities();
+    ViewBag.Title = "ورود بار";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+
+
+}
+@using (Html.BeginForm(PortalController.SAddProduct, PortalController.SController, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="card card-stats  h-75">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">person</i>
+                    </div>
+                    <h3 class="card-title">
+                        اطلاعات مالک
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @Html.AntiForgeryToken()
+                    <div style="text-align:center">
+
+                        <div class="form-group col-md-12 col-lg-6 has-feedback  bmd-form-group">
+                            @Html.LabelFor(model => model.Name, "نام محل ورود", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.TextBoxFor(Model => Model.Name, new { @class = "form-control", @required = "required", @data_error = "نام محل ورود اجباریست." })
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group col-md-12 col-lg-6 has-feedback bmd-form-group">
+                            @Html.Label("تاجر", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.DropDownList("OwnerID", new SelectList(Members.User.Users.Select(i => new { ID = i.ID, Name_Company = i.Name_Company }), "ID", "Name_Company"), new { @class = "form-control ui search dropdown", @required = "required", @data_error = "انتخاب تاجر اجباریست." })
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="card card-stats  h-75">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">local_shipping</i>
+                    </div>
+                    <h3 class="card-title">اطلاعات راننده</h3>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                            <div class="ui search1 search">
+                                <div>
+                                    @Html.TextBoxFor(i => Model.Driver.ID, new { @class = "form-control prompt", style = "text-align:left", placeholder = "22الف222ایران22", @required = "required", @data_error = "پلاک اجباریست.", maxlength = "15", data_max_error = "حداکثر کارکتر 15" })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="results"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                            @Html.LabelFor(i => Model.Driver.Name, "نام", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.TextBoxFor(i => Model.Driver.Name, new { @class = "form-control", @required = "required", @data_error = "نام اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50" })
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                            @Html.LabelFor(i => Model.Driver.Mobile, "موبایل", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.TextBoxFor(i => Model.Driver.Mobile, new { @class = "form-control", pattern = "^[-0-9]*$", @required = "required", @data_error = "موبایل اجباریست.", maxlength = "11", data_max_error = "حداکثر کارکتر 11", data_minlength = "11", data_maxlenght_error = "حداقل کارکتر 11" })
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                            @Html.LabelFor(i => Model.Driver.Code, "کدملی", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.TextBoxFor(i => Model.Driver.Code, new { @class = "form-control", pattern = "^[-0-9]*$", @required = "required", @data_error = "کدملی اجباریست.", maxlength = "10", data_max_error = "حداکثر کارکتر 11", data_minlength = "10", data_maxlenght_error = "حداقل کارکتر 10" })
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                            @Html.LabelFor(i => Model.Driver.Company_Name, "نام باربری", htmlAttributes: new { @class = "bmd-label-floating" })
+                            @Html.TextBoxFor(i => Model.Driver.Company_Name, new { @class = "form-control", @required = "required", @data_error = "نام شرکت اجباریست.", maxlength = "50", data_max_error = "حداکثر کارکتر 50" })
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <p style="clear:both"></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h3 class="card-title">جزئیات بارها</h3>
+                    <div>
+                        <a id="add" href="#" value="ثبت" class="btn btn-primary btn-md"> <i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
+                        <a id="remove" href="#" value="حذف" class="btn btn-danger btn-md"> <i class="fa fa-close fa-2x" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="card-body " data-role="dynamic-fields">
+                    <div class="form-inline1">
+                        <div class="row">
+                            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                                @Html.Label("نام بار", htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.TextBox("receiptDetails[0].Details", "", new { @class = "form-control", @required = "required", @data_error = "نام بار اجباریست." })
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                                @Html.Label("تعداد", htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.TextBox("receiptDetails[0].Count", "", new { min = "1", @type = "number", @class = "form-control", @required = "required", @data_error = "تعداد اجباریست." })
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                                @Html.Label("واحد بار", htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.DropDownList("receiptDetails[0].Load_TypeID", new SelectList(db.Types, "ID", "Name"), new { @class = "form-control ui search dropdown", @required = "required", @data_error = "انتخاب واحد بار اجباریست." })
+                                <div class="help-block with-errors"></div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                                @Html.Label("وزن واحد", htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.TextBox("receiptDetails[0].Weight", "", new { min = "1", @type = "number", @class = "form-control", @required = "required", @data_error = "وزن واحد اجباریست." })
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                                @Html.Label("نوع وزن", htmlAttributes: new { @class = "bmd-label-floating" })
+
+                                @Html.TextBox("receiptDetails[0].WeightType", "", htmlAttributes: new { @class = "form-control", @required = "required", @data_error = "نوع وزن اجباریست." })
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:1%;clear:both;border:1px solid #b8b7b7"></div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="group-btn">
+                        <input type="submit" value="ثبت" class="btn btn-info btn-md" />
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<div class="row samplefields" style="display:none">
+    <div class="form-inline1">
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                @Html.Label("نام بار", htmlAttributes: new { @class = "bmd-label-floating" })
+                @Html.TextBox("receiptDetails[0].Details", "", new { @class = "form-control", @required = "required", @data_error = "نام بار اجباریست." })
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                @Html.Label("تعداد", htmlAttributes: new { @class = "bmd-label-floating" })
+                @Html.TextBox("receiptDetails[0].Count", "", new { min = "1", @type = "number", @class = "form-control", @required = "required", @data_error = "تعداد اجباریست." })
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                @Html.Label("واحد بار", htmlAttributes: new { @class = "bmd-label-floating" })
+                @Html.DropDownList("receiptDetails[0].Load_TypeID", new SelectList(db.Types, "ID", "Name"), new { @class = "form-control ui search dropdown", @required = "required", @data_error = "انتخاب واحد بار اجباریست." })
+                <div class="help-block with-errors"></div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                @Html.Label("وزن واحد", htmlAttributes: new { @class = "bmd-label-floating" })
+                @Html.TextBox("receiptDetails[0].Weight", "", new { min = "1", @type = "number", @class = "form-control", @required = "required", @data_error = "وزن واحد اجباریست." })
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group col-md-12 col-lg-4 has-feedback bmd-form-group">
+                @Html.Label("واحد وزن", htmlAttributes: new { @class = "bmd-label-floating" })
+
+                @Html.TextBox("receiptDetails[0].WeightType", "", htmlAttributes: new { @class = "form-control", @required = "required", @data_error = "واحد وزن اجباریست." })
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <div style="margin-bottom:1%;clear:both;border:1px solid #b8b7b7"></div>
+    </div>
+</div>
+
+@section footer{
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var identity = 1;
+            var content = [
+                @foreach(var item in db.Drivers) {
+                    <text>
+                { title: '@item.ID' },
+                </text>
+        }     ];
+            $('.ui.search1')
+                .search({
+                    source: content
+                });
+            $('.ui.dropdown').dropdown();
+             function country() {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("Driver", PortalController.SController)/'+ $('#Driver_ID').val(),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#Driver_Name").val(data.Name);
+                        $("#Driver_Mobile").val(data.Mobile);
+                        $("#Driver_Code").val(data.Code);
+                         $("#Driver_Company_Name").val(data.Company_Name);
+                    },
+                    error: function () {  }
+                });
+            }
+            $('#Driver_Name').focusin(function () {
+
+                country();
+            });
+            $(document).on(
+                'click',
+                '#remove',
+                function (e) {
+                    e.preventDefault();
+                    $('[data-role="dynamic-fields"]').children().filter('.form-inline1:last-child').remove();
+                    $('form').validator('update');
+                                                identity--;
+                    $('.ui.dropdown').dropdown();
+
+                }
+            );
+            // Add button click
+            $(document).on(
+                'click',
+                '#add',
+                function (e) {
+                    e.preventDefault();
+                    var container = $('[data-role="dynamic-fields"]');
+                    new_field_group = $('.samplefields .form-inline1:first-child').clone();
+                    console.log(new_field_group);
+                    new_field_group.find('input').each(function () {
+                        if ($(this).val('').attr('name')) {
+                            name = parseInt($(this).val('').attr('name').match(/\d+/) )+ identity;
+                            newname = $(this).val('').attr('name').replace('[0]', '[' + name + ']');
+                            $(this).val('').attr('name', newname);
+
+                        }
+                    });
+                    new_field_group.find('select').each(function () {
+                        if ($(this).val('').attr('name')) {
+                            name = parseInt($(this).val('').attr('name').match(/\d+/)) + identity;
+                            newname = $(this).val('').attr('name').replace('[0]', '[' + name + ']');
+                            $(this).val('').attr('name', newname);
+
+                        }
+                    });
+identity++;
+                    container.append(new_field_group);
+                    $('form').validator('update');
+                                        $('.ui.dropdown').dropdown();
+
+                }
+            );
+        });
+
+    </script>
+
+}
+
+
+

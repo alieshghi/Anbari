@@ -1,0 +1,120 @@
+﻿@model  Row
+@using Anbarii.Classes.Values
+@using Anbarii.Controllers
+@using Anbarii.Classes
+@using Anbarii.Models
+@{
+    AnbariiEntities db = new AnbariiEntities();
+    List<RowInput> rowInputs = (List<RowInput>)Session["RowInput"];
+    List<Load> loadsList = new List<Load>();
+    var users = Members.User.UsersR
+        .Where(i => i.Users.Any(j => j.ID.Equals(Model.WherHouseID)))
+        .Select(i => new { ID = i.ID, Name = i.Name + "(" + i.Name_Company + ")" }).ToList();
+    users.Add(new { ID = (long)0, Name = "" });
+    foreach (var item in rowInputs)
+    {
+        loadsList.Add(db.Loads.Where(i => i.ID.Equals(item.ID)).FirstOrDefault());
+    }
+    ViewBag.Title = "ایجاد ردیف";
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+
+
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">local_shipping</i>
+                </div>
+                <h3 class="card-title">مشخصات ثبت درخواست</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    @using (Html.BeginForm(PortalController.SRow, PortalController.SController))
+                    {
+
+                        @Html.AntiForgeryToken()
+                        <div class="col-md-12">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(i => i.WherHouseID)
+                            <div>
+                                <div class="form-group has-feedback col-lg-6 col-md-12 bmd-form-group">
+                                    @Html.Label("DestinationID", "خریدار", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.DropDownList(name: "DestinationID", selectList: new SelectList(users.OrderBy(i => i.ID), "ID", "Name"), htmlAttributes: new { @class = "form-control ui search dropdown", })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback col-lg-6 col-md-12 bmd-form-group">
+                                    @Html.LabelFor(Load_Users => Model.Name, "شناسه", htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.TextBoxFor(Load_Users => Model.Name, new { @class = "form-control", })
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <p style="clear:both"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <span class="group-btn">
+                                <input type="submit" value="ثبت" class="btn btn-warning btn-md" />
+                            </span>
+                        </div>
+
+                        <br />
+                    }
+
+
+                </div>
+                <div class="row">
+                    <div class="table-responsive" style="margin-top: 50px; margin-left:auto;margin-right:auto">
+                        <table id="DataTable" class="print table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>ردیف</th>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                    <th>وزن واحد</th>
+                                    <th>وزن</th>
+                                    <th>نام انبار</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (var i = 0; i < loadsList.Count(); i++)
+                                {
+
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@loadsList[i].Name</td>
+                                    <td>@rowInputs[i].Count @loadsList[i].Type.Name</td>
+                                    <td>@loadsList[i].Weight @loadsList[i].Weight_Type</td>
+                                    <td>@(loadsList[i].Weight*rowInputs[i].Count) @loadsList[i].Weight_Type</td>
+                                    <td>@loadsList[i].Wherhouse.Name_Company</td>
+
+                                </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.ui.dropdown')
+                .dropdown();
+        });
+
+    </script>
+
+}
+
+
+

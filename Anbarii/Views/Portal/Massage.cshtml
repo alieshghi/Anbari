@@ -1,0 +1,31 @@
+﻿@model Notification
+@using Anbarii.Models
+@using Anbarii.Controllers
+@{
+    TempData[PortalController.STickets] = "active";
+    ViewBag.Title = Model.Subject;
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose">
+                <h4 class="card-title">@Model.Subject</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-description" style="white-space: pre-line">
+                    @Model.Body
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+@section footer{
+
+
+}
+
+
+

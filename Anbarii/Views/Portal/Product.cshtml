@@ -1,0 +1,334 @@
+﻿@model  LoadReportMOdel
+@using Anbarii.Classes.Values
+@using Anbarii.Classes
+@using Anbarii.Controllers
+@using Anbarii.Models
+@{
+    TempData[PortalController.SProducts] = "active";
+    AnbariiEntities db = new AnbariiEntities();
+    ViewBag.Title = Model.Model1.Name;
+    Layout = "~/Views/Shared/_portal_layout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css" />
+    <link href="~/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/colReorder.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <style>
+        .labeel {
+            text-align: left
+        }
+
+        .carousel-control.left, .carousel-control.right {
+            background-color: rgba(1,1,1,0.2);
+        }
+
+        .gallery {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+            .gallery img {
+                max-width: 7rem;
+            }
+    </style>
+
+}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">subtitles</i>
+                </div>
+                <h4 class="card-title ">جزئیات بار</h4>
+            </div>
+            <div class="card-body">
+                <div style="text-align:center">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 ">
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => Model.Model1.Name, "نام بار", htmlAttributes: new { @class = " labeel" })
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    @Html.DisplayFor(Model => Model.Model1.Name)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 ">
+                            <div class="col-md-4">
+                                @Html.LabelFor(Model => Model.Model1.OwnerID, "تاجر", htmlAttributes: new { @class = "labeel" })
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    @Html.DisplayFor(Model => Model.Model1.Owner.Name_Company)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 ">
+                            <div class="form-group has-feedback">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => Model.Model1.Count, "تعداد", htmlAttributes: new { @class = " labeel" })
+                                </div>
+                                <div class="col-md-8">
+                                    <p>
+                                        @Html.DisplayFor(Model => Model.Model1.Count)
+                                        @Html.DisplayFor(Model => Model.Model1.Type.Name)
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <p style="clear:both"></p>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 ">
+                            <div class="col-md-4">
+
+                                @Html.Label("UnitWeight", "وزن واحد", htmlAttributes: new { @class = "labeel" })
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    @Html.DisplayFor(Model => Model.Model1.Weight)
+                                    @Html.DisplayFor(Model => Model.Model1.Weight_Type)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 ">
+                            <div class="col-md-4">
+
+                                @Html.LabelFor(model => Model.Model1.Weight, "وزن", htmlAttributes: new { @class = "labeel" })
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    @(Model.Model1.Weight * Model.Model1.Count)
+                                    @Html.DisplayFor(Model => Model.Model1.Weight_Type)
+                                    
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="col-md-2">
+
+                                @Html.LabelFor(model => Model.Model1.Details, "مشخصات", htmlAttributes: new { @class = "labeel" })
+                            </div>
+                            <div class="col-md-10">
+                                <p>
+                                    @Html.DisplayFor(Model => Model.Model1.Details)
+                                </p>
+                            </div>
+                        </div>
+                        <p style="clear:both"></p>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">photo_library</i>
+                </div>
+                <h4 class="card-title">عکس</h4>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class='list-group gallery'>
+                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                <a class="thumbnail fancybox" rel="ligthbox" href="@(UIStrings.ImagePath+Model.Model1.Pic1)">
+                                    <img class="img-responsive" alt="" src="@(UIStrings.ImagePath+Model.Model1.Pic1)" />
+                                    <div class='text-right'>
+                                        <small class='text-muted'></small>
+                                    </div> <!-- text-right / end -->
+                                </a>
+                            </div> <!-- col-6 / end -->
+                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                <a class="thumbnail fancybox" rel="ligthbox" href="@(UIStrings.ImagePath+Model.Model1.Pic2)">
+                                    <img class="img-responsive" alt="" src="@(UIStrings.ImagePath+Model.Model1.Pic2)" />
+                                    <div class='text-right'>
+                                        <small class='text-muted'>Image Title</small>
+                                    </div> <!-- text-right / end -->
+                                </a>
+                            </div> <!-- col-6 / end -->
+                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                <a class="thumbnail fancybox" rel="ligthbox" href="@(UIStrings.ImagePath+Model.Model1.Pic3)">
+                                    <img class="img-responsive" alt="" src="@(UIStrings.ImagePath+Model.Model1.Pic3)" />
+                                    <div class='text-right'>
+                                        <small class='text-muted'>Image Title</small>
+                                    </div> <!-- text-right / end -->
+                                </a>
+                            </div> <!-- col-6 / end -->
+                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                <a class="thumbnail fancybox" rel="ligthbox" href="@(UIStrings.ImagePath+Model.Model1.Pic4)">
+                                    <img class="img-responsive" alt="" src="@(UIStrings.ImagePath+Model.Model1.Pic4)" />
+                                    <div class='text-right'>
+                                        <small class='text-muted'>Image Title</small>
+                                    </div> <!-- text-right / end -->
+                                </a>
+                            </div> <!-- col-6 / end -->
+                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                <a class="thumbnail fancybox" rel="ligthbox" href="@(UIStrings.ImagePath+Model.Model1.Pic5)">
+                                    <img class="img-responsive" alt="" src="@(UIStrings.ImagePath+Model.Model1.Pic5)" />
+                                    <div class='text-right'>
+                                        <small class='text-muted'>Image Title</small>
+                                    </div> <!-- text-right / end -->
+                                </a>
+                            </div> <!-- col-6 / end -->
+
+                        </div> <!-- list-group / end -->
+                    </div> <!-- row / end -->
+                </div>
+                <!-- Wrapper for slides -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:5%">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-success">
+                <h4 class="card-title ">تغییرات بار</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive" style="margin-top: 50px; margin-left:auto;margin-right:auto">
+
+
+                    <table id="DataTable" class="print table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>تاریخ</th>
+                                <th>شناسه</th>
+                                <th>خریدار</th>
+                                <th>فروشنده</th>
+                                <th>شماره رسید</th>
+                                <th>شماره حواله</th>
+                                <th>تعداد وارده</th>
+                                <th>تعداد صادره</th>
+                                <th>وزن وارده</th>
+                                <th>وزن صادره</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var i in Model.Model2.OrderBy(i => i.Date))
+                            {
+                                <tr>
+                                    <td>@(i.Date.MiladiTopersian())</td>
+                                    <td>@i.Name</td>
+                                    <td>@i.SellerName</td>
+                                    <td>@i.CustomerName</td>
+                                    <td>
+                                        @if (i.LinkType.Equals(true) && !i.IDIn.Equals("-", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <a rel="جزئیات" href="@Url.Action(PortalController.SReceiptPrint,PortalController.SController , new { ID = i.IDIn, i.WherHouseID })"> @i.IDIn </a>
+                                        }
+                                        else if (!i.IDIn.Equals("-", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <a rel="جزئیات" href="@Url.Action(PortalController.SRowPrint,PortalController.SController , new { ID = i.IDIn, i.WherHouseID })"> @i.IDIn </a>
+
+                                        }
+                                        else
+                                        {
+                                            @i.IDIn
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!i.IDOut.Equals("-", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <a rel="جزئیات" href="@Url.Action(PortalController.SRowPrint, PortalController.SController, new { ID = i.IDOut, i.WherHouseID })"> @i.IDOut </a>
+                                        }
+                                        else
+                                        {
+                                            @i.IDOut;
+                                        }
+                                    </td>
+                                    <td>@i.CountIn</td>
+                                    <td>@i.CountOut</td>
+                                    <td>@i.WeightIn</td>
+                                    <td>@i.WeightOut</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section footer{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" language="javascript" src="~/js/dataTables.buttons.min.js"></script>
+    <script src="~/js/buttons.colVis.min.js"></script>
+    <script src="~/js/buttons.print.js"></script>
+    <script src="~/js/dataTables.colReorder.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+            $('#DataTable').DataTable({
+                colReorder: true,
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "همه"]],
+                dom: 'Bfrtip',
+                columnDefs: [
+                    {
+                        targets: 1,
+                        className: 'noVis'
+                    }
+                ],
+                language: {
+                    "emptyTable": "هیچ موردی یافت نشد.",
+                    "zeroRecords": "هیچ موردی یافت نشد.",
+                    "info": "نمایش _START_ تا _END_ از _TOTAL_ مورد",
+                    "infoEmpty": "نمایش 0 تا 0 از 0 مورد",
+                    "infoFiltered": "(جداشده از _MAX_ کل موارد)",
+                    "lengthMenu": "نمایش _MENU_ مورد",
+                    "loadingRecords": "در حال بارگذاری...",
+                    "processing": "درحال پردازش...",
+                    search: "_INPUT_",
+                    searchPlaceholder: "جستجو...",
+                    "paginate": {
+                        "first": "اولین",
+                        "last": "آخرین",
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    },
+                    buttons: {
+                        pageLength: {
+                            _: "نمایش %d مورد",
+                            '-1': "نمایش همه"
+                        }
+                    }
+                },
+                buttons: [
+                    'pageLength',
+                    {
+                        text: 'چاپ',
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+                ]
+            });
+        });
+
+    </script>
+
+}
+
+
+
